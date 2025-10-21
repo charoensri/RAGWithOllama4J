@@ -14,13 +14,15 @@ Ollama‑4j 0.5+ Java wrapper for Ollama HTTP API
 
 **1.1 Install PostgreSQL & pgvector**
 ** Debian/Ubuntu**
+```
 sudo apt-get install postgresql postgresql-contrib
 sudo -u postgres psql -c "CREATE EXTENSION IF NOT EXISTS vector;"
 
 **PostgreSQL 15+ ships pgvector by default
 If you’re on 14, install pgvector:
    CREATE EXTENSION vector;**
-   
+
+
 Create a database and user (adjust as needed):
 sudo -u postgres psql
 CREATE DATABASE rag_demo;

@@ -1,5 +1,92 @@
 
-POM:
+1. Prerequisites
+
+Java 17 (or any 11‑+ LTS), ollama‑4j targets Java 17+
+Maven 3.6+ Build tool
+PostgreSQL **15.0+ (or 14+ with pgvector)** Need pgvector for vector similarity
+Ollama 0.2+ (or newer) Provides embedding & generation endpoints
+Ollama‑4j 0.5+ Java wrapper for Ollama HTTP API
+
+1.1 Install PostgreSQL & pgvector
+# Debian/Ubuntu
+sudo apt-get install postgresql postgresql-contrib
+sudo -u postgres psql -c "CREATE EXTENSION IF NOT EXISTS vector;"
+# PostgreSQL 15+ ships pgvector by default
+# If you’re on 14, install pgvector:
+#   CREATE EXTENSION vector;
+Create a database and user (adjust as needed):
+sudo -u postgres psql
+CREATE DATABASE rag_demo;
+CREATE USER rag_user WITH PASSWORD 'strong!Pass';
+GRANT ALL PRIVILEGES ON DATABASE rag_demo TO rag_user;
+\q
+
+
+1.2 Install Ollama
+curl -fsSL https://ollama.com/install.sh | sh
+ollama run llama3.1  # pull a model (or any model you prefer)
+
+
+-- Table: public.documents
+
+-- DROP TABLE IF EXISTS public.documents;
+
+CREATE TABLE IF NOT EXISTS public.documents
+(
+    id bigint NOT NULL DEFAULT nextval('documents_id_seq'::regclass),
+    title text COLLATE pg_catalog."default",
+    content text COLLATE pg_catalog."default" NOT NULL,
+   ** embedding vector(4096),**
+    CONSTRAINT documents_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.documents
+    OWNER to postgres;
+
+//==============
+
+
+chars1@L47178WAP:/$ sudo -u postgres psql -d rag_demo
+psql (17.5 (Ubuntu 17.5-1.pgdg22.04+1))
+Type "help" for help.
+
+rag_demo=# \dx
+                             List of installed extensions
+  Name   | Version |   Schema   |                     Description
+---------+---------+------------+------------------------------------------------------
+ plpgsql | 1.0     | pg_catalog | PL/pgSQL procedural language
+ vector  | 0.8.1   | public     | vector data type and ivfflat and hnsw access methods
+(2 rows)
+
+rag_demo=#
+
+rag_demo=# select id from documents;
+ id
+----
+ 32
+ 33
+ 34
+ 35
+(4 rows)
+
+rag_demo=# select id, title, content from documents;
+rag_demo=# select id, title, content from documents;
+rag_demo=#
+rag_demo=# select id, title from documents;
+ id | title
+----+--------
+ 32 | Java
+ 33 | Python
+ 34 | Docker
+ 35 | K8s
+(4 rows)
+
+rag_demo=# select id, title, content from documents;
+rag_demo=#
+
+**POM:**
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

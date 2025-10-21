@@ -1,0 +1,66 @@
+
+POM:
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="
+           http://maven.apache.org/POM/4.0.0
+           https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- JitPack is where ollama4j lives -->
+  <repositories>    
+    <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+    </repository>
+  </repositories>
+  
+    <groupId>com.example</groupId>
+    <artifactId>rag-postgres-ollama</artifactId>
+    <version>0.1.0</version>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <!-- JDBC driver for Postgres -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.3</version>
+        </dependency>
+        
+        <!-- ollama4j: Java client for Ollama -->
+        <dependency>
+            <groupId>io.github.ollama4j</groupId>
+            <artifactId>ollama4j</artifactId>
+             <version>1.1.0</version>
+        </dependency>
+             
+<!--
+<dependency>
+  <groupId>com.github.dreamhead</groupId>
+  <artifactId>ollama4j</artifactId>
+  <version>1.0.0</version>
+  <scope>compile</scope>
+</dependency>
+-->        
+        <!-- Jackson for JSON processing -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.18.0</version>
+        </dependency>
+
+        <!-- SLF4J simple for logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.16</version>
+        </dependency>
+    </dependencies>
+</project>
